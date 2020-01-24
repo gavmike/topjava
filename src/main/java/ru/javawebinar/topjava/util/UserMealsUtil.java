@@ -11,7 +11,6 @@ import java.util.List;
 
 public class UserMealsUtil {
     public static void main(String[] args) {
-        //wrong commit
         List<UserMeal> meals = Arrays.asList(
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500),
                 new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 13, 0), "Обед", 1000),
