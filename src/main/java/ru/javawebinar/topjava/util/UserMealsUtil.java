@@ -74,11 +74,11 @@ public class UserMealsUtil {
 
         sumCulMeal = meals.stream().collect(Collectors.groupingBy(x -> x.getDateTime().toLocalDate(), Collectors.summingInt(x -> x.getCalories())));
 
-        userMealWithExcesses = meals.stream().filter(x -> TimeUtil.isBetweenInclusive(x.getDateTime().toLocalTime(), startTime, endTime))
-                .map(x -> creatUserMealWithExcess(x, sumCulMeal.get(x.getDateTime().toLocalDate()) > caloriesPerDay)).collect(Collectors.toList());
+        userMealWithExcesses = meals.stream().filter(m -> TimeUtil.isBetweenInclusive(m.getDateTime().toLocalTime(), startTime, endTime))
+                .map(m -> creatUserMealWithExcess(m, sumCulMeal.get(m.getDateTime().toLocalDate()) > caloriesPerDay)).collect(Collectors.toList());
 
 
-        return userMealWithExcesses.stream().filter(x -> x.isExcess()).collect(Collectors.toList());
+        return userMealWithExcesses.stream().filter(excess -> excess.isExcess()).collect(Collectors.toList());
     }
 
     public static UserMealWithExcess creatUserMealWithExcess(UserMeal userMeal, boolean exceed) {
