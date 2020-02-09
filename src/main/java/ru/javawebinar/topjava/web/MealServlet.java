@@ -30,23 +30,18 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String type = req.getParameter("type");
-
         if(type==null) {
-
-            List<MealTo> mealTo = MealsUtil.filteredByStreams(mealsDAO.getAll(), LocalTime.of(00, 00), LocalTime.of(23, 59), 2000);
-            //log.info("meals{}", mealTo);
-
+            List<MealTo> mealTo = MealsUtil.filteredByStreams(mealsDAO.getAll(), LocalTime.of(00, 00),
+                    LocalTime.of(23, 59), 2000);
             req.setAttribute("meals", mealTo);
             req.getRequestDispatcher("meal.jsp").forward(req, resp);
         }
         if (type.equals("update")) {
             int id = Integer.valueOf(req.getParameter("id"));
-            Meal meal = mealsDAO.get(id-1);
+            Meal meal = mealsDAO.get(id);
             log.info("meal{}", meal);
             req.setAttribute("meal", meal);
             req.getRequestDispatcher("update.jsp").forward(req, resp);
-
-
         }
      }
 
@@ -54,14 +49,13 @@ public class MealServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String type = req.getParameter("type");
-
         if(type.equals("add")) {
             final String dateTime = req.getParameter("dateTime");
             final String description = req.getParameter("description");
             final String calories = req.getParameter("calories");
             Meal newMeal = new Meal(LocalDateTime.parse(dateTime), description, Integer.valueOf(calories));
             mealsDAO.save(newMeal);
-
+            resp.sendRedirect("meals");
         }
         if(type.equals("edit")) {
             final String dateTime = req.getParameter("dateTime");
@@ -70,16 +64,15 @@ public class MealServlet extends HttpServlet {
             int id = Integer.valueOf(req.getParameter("id"));
             Meal editMeal = new Meal(id,LocalDateTime.parse(dateTime), description, Integer.valueOf(calories));
             log.info("id{}", id);
-            mealsDAO.update(editMeal,id-1);
-
+            mealsDAO.update(editMeal,id);
+            resp.sendRedirect("meals");
         }
         if(type.equals("delete")) {
-
             int id = Integer.valueOf(req.getParameter("id"));
-
             log.info("id{}", id);
-            mealsDAO.delete(id-1);
 
+            mealsDAO.delete(id);
+            resp.sendRedirect("meals");
         }
 
     }
