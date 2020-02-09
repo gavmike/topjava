@@ -7,9 +7,10 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MealsDAOImpl implements MealsDAO {
-  private List<Meal> storage = new ArrayList<>();
+  private List<Meal> storage = new CopyOnWriteArrayList();
   private AtomicInteger id = new AtomicInteger(0);
 
     {
