@@ -12,7 +12,6 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class MealsDAOImpl implements MealsDAO {
   private List<Meal> storage = new CopyOnWriteArrayList();
   private AtomicInteger id = new AtomicInteger(0);
-
     {
         save(new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500));
         save( new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500));
@@ -22,7 +21,6 @@ public class MealsDAOImpl implements MealsDAO {
         save(  new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 10, 0), "Завтрак", 1000));
         save( new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 13, 0), "Обед", 500));
         save( new Meal(LocalDateTime.of(2020, Month.JANUARY, 31, 20, 0), "Ужин", 310));
-
     }
 
     @Override
@@ -32,9 +30,7 @@ public class MealsDAOImpl implements MealsDAO {
             if(meals.getId()==id){
                 i = storage.indexOf(meals);
             }
-
         }
-
         return storage.get(i);
     }
 
@@ -46,27 +42,19 @@ public class MealsDAOImpl implements MealsDAO {
             { i = storage.indexOf(meal);
                break;
             }
-
         }
         storage.remove(i);
-
-
     }
 
     @Override
     public void update(Meal meal, int id) {
         int i =0;
         for (Meal mealThis:storage) {
-            if(mealThis.getId()==id)
-            { i = storage.indexOf(mealThis);
-
+            if(mealThis.getId()==id){
+                i = storage.indexOf(mealThis);
             }
-
         }
-
         storage.set(i,meal);
-
-
     }
 
     @Override
