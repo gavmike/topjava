@@ -26,15 +26,16 @@ public class Main {
         Meal meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
         //mealsDAO.update(meal,3);
         System.out.println(mealsDAO.getAll().size());
-        System.out.println(mealsDAO.getAll().get(1).getId());
-        mealsDAO.delete(3);
+        System.out.println(mealsDAO.getAll().get(3).getId());
+        //mealsDAO.delete(3);
        System.out.println(mealsDAO.getAll().get(3).getId());
        // System.out.println(mealsDAO.getAll());
        // System.out.println(mealsDAO.getAll().size());
 
        /* System.out.println( mealsDAO.get(1));*/
-      /*  List<MealTo> mealTo =  MealsUtil.filteredByCycles(mealsDAO.getAll(), LocalTime.of(00,00),LocalTime.of(23,59),2000);
-        System.out.println(mealTo.get(2).getId());*/
+       List<MealTo> mealTo =  MealsUtil.filteredByCycles(mealsDAO.getAll(), LocalTime.of(00,00),LocalTime.of(23,59),2000);
+        System.out.println(mealTo.size());
+        System.out.println(mealTo.get(3).getId());
 
 
     }
