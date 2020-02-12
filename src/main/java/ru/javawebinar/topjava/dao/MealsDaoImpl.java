@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class MealsDAOImpl implements MealsDAO {
+public class MealsDaoImpl implements MealsDao {
   private List<Meal> storage = new CopyOnWriteArrayList();
   private AtomicInteger id = new AtomicInteger(0);
     {
@@ -66,6 +66,8 @@ public class MealsDAOImpl implements MealsDAO {
 
     @Override
     public List<Meal> getAll() {
-        return storage;
+       List<Meal> outsiteList = new ArrayList<>();
+       outsiteList.addAll(storage);
+        return outsiteList;
     }
 }

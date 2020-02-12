@@ -4,7 +4,7 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.util.List;
 
-public interface MealsDAO {
+public interface MealsDao {
     public Meal get (int id);
     public void delete(int id);
     public void update(Meal meal, int id);

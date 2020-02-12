@@ -1,7 +1,7 @@
 package ru.javawebinar.topjava.model;
 
 import java.time.LocalDateTime;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class MealTo {
     private Integer id;
@@ -50,12 +50,6 @@ public class MealTo {
         return excess;
     }
 
-
-
-
-    //    public Boolean getExcess() {
-//        return excess.get();
-//    }
 
     @Override
     public String toString() {

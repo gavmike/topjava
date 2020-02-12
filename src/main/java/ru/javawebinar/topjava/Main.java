@@ -1,6 +1,6 @@
 package ru.javawebinar.topjava;
 
-import ru.javawebinar.topjava.dao.MealsDAOImpl;
+import ru.javawebinar.topjava.dao.MealsDaoImpl;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
@@ -21,7 +21,7 @@ public class Main {
         Meal meal2 = new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
         System.out.println(meal.getId());
         System.out.println(meal2.getId());*/
-        MealsDAOImpl mealsDAO = new MealsDAOImpl();
+        MealsDaoImpl mealsDAO = new MealsDaoImpl();
        // System.out.println(mealsDAO.getAll());
         Meal meal = new Meal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500);
         //mealsDAO.update(meal,3);
