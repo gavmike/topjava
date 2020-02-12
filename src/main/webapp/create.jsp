@@ -11,7 +11,7 @@
     <label> <input type="text" name="description"></label>description<br>
     <label> <input type="number" name="calories"></label>calories<br>
     <input type="hidden" name="type" value="add">
-    <input type="submit" value="ok" name="add1" > <br>
+    <input type="submit" value="ok"  > <br>
 </form>
 </body>
 </html>

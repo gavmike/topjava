@@ -24,10 +24,10 @@
           <td> <font color= ${meals.excess ? 'red': 'green' }> <c:out value="${meals.description}"/></font></td>
           <td>  <font color= ${meals.excess ? 'red': 'green' }>  <c:out value="${meals.calories}"/></font></td>
 
-     <form method="get" action="update">
+     <form method="get" action="meals">
           <input type="hidden"  name="id" value="${meals.id}" />
           <input type="hidden" name="type" value="update">
-          <td><input type="submit" name="update" value="update" /><td>
+          <td><input type="submit"  value="update" /><td>
      </form>
           <form method="post" action="">
               <input type="hidden"  name="id" value="${meals.id}" />
@@ -37,7 +37,7 @@
       </tr>
   </c:forEach>
 </table>
-  <form method="get" action="create">
+  <form method="get" action="meals">
 
       <input type="hidden" name="type" value="create">
       <td><input type="submit" name="update" value="create" /><td>
