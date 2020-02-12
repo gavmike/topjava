@@ -37,13 +37,11 @@
       </tr>
   </c:forEach>
 </table>
-  <h2> создание новой еды</h2>
-  <form method="post" action="" >
-      <label> <input type="datetime-local" value="${meal.getDateTime()}" name="dateTime" ></label>Date<br>
-      <label> <input type="text" name="description"></label>description<br>
-      <label> <input type="number" name="calories"></label>calories<br>
-      <input type="hidden" name="type" value="add">
-      <input type="submit" value="ok" name="add1" > <br>
+  <form method="get" action="create">
+
+      <input type="hidden" name="type" value="create">
+      <td><input type="submit" name="update" value="create" /><td>
   </form>
+
   </body>
 </html>

@@ -8,10 +8,12 @@
 </head>
 <body>
 <h2> update meals</h2>
+<fmt:parseDate pattern="yyyy-MM-dd'T'HH:mm" value="${requestScope.meal.dateTime}" var="date"/>
+<fmt:formatDate value="${date}" pattern="dd.MM.yyyy HH:mm" var="newDate"/>
 
-<div> ID : <c:out value="${requestScope.meal.id}" /> </div>
-<div> Date: <c:out value="${requestScope.meal.dateTime}" /> </div>
+<div> Date: <c:out value="${newDate}" /> </div>
 <div> calories : <c:out value="${requestScope.meal.calories}" /> </div>
+
 
 <form method="post" action="meals" >
     <input type="hidden" name="type" value="edit">

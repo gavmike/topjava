@@ -43,6 +43,10 @@ public class MealServlet extends HttpServlet {
             req.setAttribute("meal", meal);
             req.getRequestDispatcher("update.jsp").forward(req, resp);
         }
+        if (type.equals("create")) {
+
+            req.getRequestDispatcher("create.jsp").forward(req, resp);
+        }
      }
 
     @Override
