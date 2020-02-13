@@ -27,30 +27,37 @@ public class Meal {
     }
 
     public LocalDateTime getDateTime() {
+
         return dateTime;
     }
 
     public String getDescription() {
+
         return description;
     }
 
     public int getCalories() {
+
         return calories;
     }
 
     public LocalDate getDate() {
+
         return dateTime.toLocalDate();
     }
 
     public LocalTime getTime() {
+
         return dateTime.toLocalTime();
     }
 
     public int getId() {
+
         return id;
     }
 
     public void setId(int id) {
+
         this.id = id;
     }
 }
