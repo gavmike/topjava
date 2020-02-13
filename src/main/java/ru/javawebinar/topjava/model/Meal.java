@@ -20,10 +20,8 @@ public class Meal {
         this.calories = calories;
     }
 
-
     public Meal(LocalDateTime dateTime, String description, int calories) {
         this(null, dateTime, description, calories);
-
     }
 
     public LocalDateTime getDateTime() {
