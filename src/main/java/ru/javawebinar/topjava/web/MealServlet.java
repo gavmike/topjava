@@ -1,3 +1,4 @@
+/*
 package ru.javawebinar.topjava.web;
 
 import org.slf4j.Logger;
@@ -77,3 +78,4 @@ public class MealServlet extends HttpServlet {
         return Integer.parseInt(paramId);
     }
 }
+*/

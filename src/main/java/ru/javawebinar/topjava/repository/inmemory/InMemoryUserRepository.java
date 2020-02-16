@@ -8,10 +8,7 @@ import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -60,6 +57,12 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         log.info("getAll");
+        //return  usersStorage.values().stream().collect(Collectors.toList());
+      /*  List<User> listUsers = usersStorage.values().stream().collect(Collectors.toList());
+        List<User> listUsers2 = usersStorage.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue, Comparator.<User>naturalOrder())).map(x->x.getKey()).collect(Collectors.toList());
+        Collections.sort(listUsers2);
+        listUsers.sort(Comparator.naturalOrder());
+         Collections.sort(listUsers);*/
         return  usersStorage.values().stream().collect(Collectors.toList());
     }
 
