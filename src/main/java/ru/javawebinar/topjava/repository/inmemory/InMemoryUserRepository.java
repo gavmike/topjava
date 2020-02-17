@@ -18,7 +18,7 @@ public class InMemoryUserRepository implements UserRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryUserRepository.class);
     private Map<Integer,User> usersStorage = new ConcurrentHashMap<>();
     AtomicInteger counter = new AtomicInteger();
-    {
+   {
         User user1 = new User(null, "pavel", "email1@mail.ru", "password1", Role.ROLE_ADMIN);
         User user2 = new User(null, "mike", "email2@mail.ru", "password2", Role.ROLE_USER);
        int i1 = counter.incrementAndGet();
@@ -57,12 +57,6 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         log.info("getAll");
-        //return  usersStorage.values().stream().collect(Collectors.toList());
-      /*  List<User> listUsers = usersStorage.values().stream().collect(Collectors.toList());
-        List<User> listUsers2 = usersStorage.entrySet().stream().sorted(Comparator.comparing(Map.Entry::getValue, Comparator.<User>naturalOrder())).map(x->x.getKey()).collect(Collectors.toList());
-        Collections.sort(listUsers2);
-        listUsers.sort(Comparator.naturalOrder());
-         Collections.sort(listUsers);*/
         return  usersStorage.values().stream().sorted(comparator).collect(Collectors.toList());
     }
 

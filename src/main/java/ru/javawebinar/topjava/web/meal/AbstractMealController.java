@@ -35,6 +35,7 @@ public class AbstractMealController {
     public void update (Meal meal){
         log.info("update {}", meal);
         int userId = SecurityUtil.authUserId();
+        log.info("userId {}", userId);
         mealService.update(meal,userId);
     }
     public Meal get(int id){
