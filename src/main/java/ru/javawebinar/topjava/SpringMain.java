@@ -9,6 +9,7 @@ import ru.javawebinar.topjava.repository.inmemory.InMemoryUserRepository;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 import ru.javawebinar.topjava.web.user.AdminRestController;
 
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ public class SpringMain {
            // adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
            // InMemoryUserRepository inMemoryUserRepository = (InMemoryUserRepository)new InMemoryUserRepository();
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
+            mealRestController.delete(3);
+           /// System.out.println(mealRestController.getAll());
             System.out.println(mealRestController.getAll());
             //System.out.println((List<User>) inMemoryUserRepository.getAll());
            // System.out.println(inMemoryUserRepository.get(1));

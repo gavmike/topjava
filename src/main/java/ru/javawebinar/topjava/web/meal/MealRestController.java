@@ -5,7 +5,10 @@ import org.springframework.stereotype.Controller;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
+import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 @Controller
 public class MealRestController extends AbstractMealController {
@@ -15,6 +18,9 @@ public class MealRestController extends AbstractMealController {
     @Override
     public List<MealTo> getAll() {
         return super.getAll();
+    }
+    public List<MealTo> getAllWithTimeFilter(LocalTime start, LocalTime end){
+     return   MealsUtil.getFilteredTos(service.getAll(),MealsUtil.DEFAULT_CALORIES_PER_DAY,start,end);
     }
 
     @Override

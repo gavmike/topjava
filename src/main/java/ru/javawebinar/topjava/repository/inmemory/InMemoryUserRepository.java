@@ -19,8 +19,8 @@ public class InMemoryUserRepository implements UserRepository {
     private Map<Integer,User> usersStorage = new ConcurrentHashMap<>();
     AtomicInteger counter = new AtomicInteger();
     {
-        User user1 = new User(null, "userName1", "email1@mail.ru", "password1", Role.ROLE_ADMIN);
-        User user2 = new User(null, "userName2", "email2@mail.ru", "password2", Role.ROLE_USER);
+        User user1 = new User(null, "pavel", "email1@mail.ru", "password1", Role.ROLE_ADMIN);
+        User user2 = new User(null, "mike", "email2@mail.ru", "password2", Role.ROLE_USER);
        int i1 = counter.incrementAndGet();
         user1.setId(i1);
         usersStorage.put(user1.getId(),user1);
@@ -63,7 +63,7 @@ public class InMemoryUserRepository implements UserRepository {
         Collections.sort(listUsers2);
         listUsers.sort(Comparator.naturalOrder());
          Collections.sort(listUsers);*/
-        return  usersStorage.values().stream().collect(Collectors.toList());
+        return  usersStorage.values().stream().sorted(comparator).collect(Collectors.toList());
     }
 
     @Override
@@ -77,4 +77,10 @@ public class InMemoryUserRepository implements UserRepository {
         }
         return null;
     }
+    Comparator<User> comparator = new Comparator<User>() {
+        @Override
+        public int compare(User user, User user2) {
+            return user.getName().compareTo(user2.getName());
+        }
+    };
 }

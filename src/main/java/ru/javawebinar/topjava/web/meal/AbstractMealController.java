@@ -23,7 +23,8 @@ public class AbstractMealController {
     }
     public void  delete(int id){
         log.info("delete {}", id);
-       mealService.delete(id);
+        int userId = SecurityUtil.authUserId();
+       mealService.delete(id,userId);
     }
     public Meal create (Meal meal){
         log.info("create {}", meal);

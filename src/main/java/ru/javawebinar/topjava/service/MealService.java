@@ -20,8 +20,8 @@ public class MealService {
     public Meal create(Meal meal, int userId){
         return repository.save(meal,userId);
     }
-    public void delete(int id){
-        checkNotFoundWithId(repository.delete(id),id);
+    public void delete(int id, int userId){
+        checkNotFoundWithId(repository.delete(id,userId),id);
     }
     public Meal get(int id, int userId){
        return checkNotFoundWithId(repository.get(id,userId),id);

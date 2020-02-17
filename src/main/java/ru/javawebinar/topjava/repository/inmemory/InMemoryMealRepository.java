@@ -8,9 +8,12 @@ import ru.javawebinar.topjava.repository.UserRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+
 @Repository
 public class InMemoryMealRepository implements MealRepository {
     private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
@@ -18,7 +21,7 @@ public class InMemoryMealRepository implements MealRepository {
     UserRepository userRepository;
 
     {
-        MealsUtil.MEALS.forEach(x->save(x,x.getUserId()));
+        MealsUtil.MEALS.forEach(m->save(m,m.getUserId()));
     }
 
     @Override
@@ -34,8 +37,10 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public boolean delete(int id) {
-        return repository.remove(id) != null;
+    public boolean delete(int id, int userId) {
+       if (repository.get(id).getUserId()==userId)  return repository.remove(id)!=null;
+       else return false;
+
     }
 
     @Override
@@ -49,7 +54,14 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Collection<Meal> getAll() {
-        return repository.values();
+       return repository.values().stream().sorted(comparator).collect(Collectors.toList());
+
     }
+    Comparator<Meal> comparator = new Comparator<Meal>() {
+        @Override
+        public int compare(Meal meal, Meal meal1) {
+            return meal.getDate().compareTo(meal1.getDate());
+        }
+    };
 }
 
