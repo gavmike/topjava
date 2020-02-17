@@ -16,12 +16,8 @@ public class InMemoryMealRepository implements MealRepository {
     private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
-
     {
         MealsUtil.MEALS.forEach(m->save(m,m.getUserId()));
-       /* System.out.println("init repo from static InMemoryRepo");
-        System.out.println(repository);
-        System.out.println("------------------");*/
     }
 
     @Override
@@ -45,11 +41,9 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id,int userId) {
-
        if(repository.get(id).getUserId()==userId)
            return repository.get(id);
        else return  null;
-
 
     }
 

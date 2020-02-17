@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
+
 @Service
 public class MealService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
@@ -20,20 +21,24 @@ public class MealService {
     public MealService(MealRepository repository) {
         this.repository = repository;
     }
-    public Meal create(Meal meal, int userId){
-        return repository.save(meal,userId);
+
+    public Meal create(Meal meal, int userId) {
+        return repository.save(meal, userId);
     }
-    public void delete(int id, int userId){
-        checkNotFoundWithId(repository.delete(id,userId),id);
+
+    public void delete(int id, int userId) {
+        checkNotFoundWithId(repository.delete(id, userId), id);
     }
-    public Meal get(int id, int userId){
-        log.info("getFromMealService {}", userId);
-        return checkNotFoundWithId(repository.get(id,userId),id);
+
+    public Meal get(int id, int userId) {
+        return checkNotFoundWithId(repository.get(id, userId), id);
     }
-    public List<Meal> getAll(){
+
+    public List<Meal> getAll() {
         return repository.getAll().stream().collect(Collectors.toList());
     }
-    public void update(Meal meal, int userId){
-        checkNotFoundWithId(repository.save(meal,userId),meal.getId());
+
+    public void update(Meal meal, int userId) {
+        checkNotFoundWithId(repository.save(meal, userId), meal.getId());
     }
 }
