@@ -40,7 +40,7 @@ public class MealServlet extends HttpServlet {
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")),
-                SecurityUtil.authUserId()
+                null//SecurityUtil.authUserId()
         );
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         if (id.isEmpty()) mealRestController.create(meal);
@@ -55,7 +55,6 @@ public class MealServlet extends HttpServlet {
             case "delete":
                 int id = getId(request);
                 log.info("Delete {}", id);
-                //repository.delete(id);
                 mealRestController.delete(id);
                 response.sendRedirect("meals");
                 break;

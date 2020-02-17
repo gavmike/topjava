@@ -29,6 +29,7 @@ public class AbstractMealController {
     public Meal create (Meal meal){
         log.info("create {}", meal);
         int userId = SecurityUtil.authUserId();
+        log.info("userId {}", userId);
         checkNew(meal);
         return mealService.create(meal,userId);
     }
@@ -41,7 +42,8 @@ public class AbstractMealController {
     public Meal get(int id){
         log.info("get {}", id);
         int userId = SecurityUtil.authUserId();
-       return mealService.get(id,userId);
+        log.info("userId {}", userId);
+        return mealService.get(id,userId);
     }
 
 }
