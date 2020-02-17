@@ -34,8 +34,8 @@ public class MealService {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
-    public List<Meal> getAll() {
-        return repository.getAll().stream().collect(Collectors.toList());
+    public List<Meal> getAll(int userId) {
+        return repository.getAll(userId).stream().collect(Collectors.toList());
     }
 
     public void update(Meal meal, int userId) {

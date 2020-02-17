@@ -58,8 +58,8 @@ public class InMemoryMealRepository implements MealRepository {
     }
 
     @Override
-    public Collection<Meal> getAll() {
-       return repository.values().stream().sorted(comparator).collect(Collectors.toList());
+    public Collection<Meal> getAll(int userId) {
+       return repository.values().stream().filter(x->x.getUserId()==userId).sorted(comparator).collect(Collectors.toList());
 
     }
     Comparator<Meal> comparator = new Comparator<Meal>() {

@@ -19,7 +19,8 @@ public class AbstractMealController {
     private MealService mealService;
     public List<MealTo> getAll(){
         log.info("getAll");
-       return MealsUtil.getTos( mealService.getAll(),MealsUtil.DEFAULT_CALORIES_PER_DAY);
+        int userId = SecurityUtil.authUserId();
+       return MealsUtil.getTos( mealService.getAll(userId),MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
     public void  delete(int id){
         log.info("delete {}", id);

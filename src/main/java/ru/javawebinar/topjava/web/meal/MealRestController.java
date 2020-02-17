@@ -20,8 +20,8 @@ public class MealRestController extends AbstractMealController {
         return super.getAll();
     }
 
-    public List<MealTo> getAllWithTimeFilter(LocalTime start, LocalTime end) {
-        return  MealsUtil.getFilteredTos(service.getAll(),MealsUtil.DEFAULT_CALORIES_PER_DAY,start,end);
+    public List<MealTo> getAllWithTimeFilter(LocalTime start, LocalTime end, int userId) {
+        return  MealsUtil.getFilteredTos(service.getAll(userId),MealsUtil.DEFAULT_CALORIES_PER_DAY,start,end);
     }
 
     @Override
