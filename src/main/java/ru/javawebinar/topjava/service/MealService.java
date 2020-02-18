@@ -9,7 +9,6 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFound;
 import static ru.javawebinar.topjava.util.ValidationUtil.checkNotFoundWithId;
 
 @Service

@@ -28,11 +28,12 @@ public class InMemoryUserRepository implements UserRepository {
     public User save(User user) {
         log.info("save {}", user);
         if (user.isNew()) {
-            int i = counter.incrementAndGet();
-            user.setId(i);
+            user.setId(counter.incrementAndGet());
             usersStorage.put(user.getId(), user);
             return user;
-        } else return usersStorage.computeIfPresent(user.getId(), (id, oldUser) -> user);
+        } else  {
+            return usersStorage.computeIfPresent(user.getId(), (id, oldUser) -> user);
+        }
     }
 
     @Override
@@ -54,15 +55,10 @@ public class InMemoryUserRepository implements UserRepository {
         while (iterator.hasNext()) {
             Map.Entry mapElement = (Map.Entry) iterator.next();
             User user = (User) mapElement.getValue();
-            if (user.getEmail().equals(email)) return usersStorage.get(user.getId());
+            if (user.getEmail().equals(email)) return user;
         }
         return null;
     }
 
-    Comparator<User> comparator = new Comparator<User>() {
-        @Override
-        public int compare(User user, User user2) {
-            return user.getName().compareTo(user2.getName());
-        }
-    };
+    Comparator<User> comparator = (user, user2) -> user.getName().compareTo(user2.getName());
 }

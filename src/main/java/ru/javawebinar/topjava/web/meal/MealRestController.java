@@ -7,6 +7,7 @@ import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -22,6 +23,9 @@ public class MealRestController extends AbstractMealController {
 
     public List<MealTo> getAllWithTimeFilter(LocalTime start, LocalTime end, int userId) {
         return  MealsUtil.getFilteredTos(service.getAll(userId),MealsUtil.DEFAULT_CALORIES_PER_DAY,start,end);
+    }
+    public List<MealTo> getAllWithDateFilter(LocalDate start, LocalDate end, int userId) {
+        return  getAllWithTimeFilter(LocalDateTime.of(start,LocalTime.MIN),LocalDateTime.of(end,LocalTime.MIN),userId);
     }
 
     @Override

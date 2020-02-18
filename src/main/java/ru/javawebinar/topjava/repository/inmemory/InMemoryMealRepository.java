@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.MealsUtil;
-import java.util.Collection;
+
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,7 +21,7 @@ public class InMemoryMealRepository implements MealRepository {
     private static final Logger log = LoggerFactory.getLogger(InMemoryMealRepository.class);
 
     {
-        MealsUtil.MEALS.forEach(m->save(m,m.getUserId()));
+        MealsUtil.MEALS.forEach(m -> save(m, m.getUserId()));
     }
 
     @Override
@@ -32,41 +33,37 @@ public class InMemoryMealRepository implements MealRepository {
             return meal;
         }
         // handle case: update, but not present in storage
-        else {
-           int oldUserId = repository.get(meal.getId()).getUserId();
-           meal.setUserId(oldUserId);
+        else if(repository.get(meal.getId()).getUserId() == userId) {
+            log.info("updateInMemory {}", meal);
+            int oldUserId = repository.get(meal.getId()).getUserId();
+            meal.setUserId(oldUserId);
             return repository.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
         }
+        else  return null;
 
     }
 
     @Override
     public boolean delete(int id, int userId) {
-       if (repository.get(id).getUserId()==userId)  return repository.remove(id)!=null;
-       else return false;
-
+        if (repository.get(id).getUserId() == userId) return repository.remove(id) != null;
+        if(repository.get(id)==null) return false;
+        else return false;
     }
 
     @Override
-    public Meal get(int id,int userId) {
-
+    public Meal get(int id, int userId) {
         log.info("getFromDao {}", repository.get(id).getUserId());
-       if(repository.get(id).getUserId()==userId)
-           return repository.get(id);
-       else return  null;
-
+        if(repository.get(id)==null) return null;
+        if (repository.get(id).getUserId() == userId)
+            return repository.get(id);
+        else return null;
     }
 
     @Override
-    public Collection<Meal> getAll(int userId) {
-       return repository.values().stream().filter(x->x.getUserId()==userId).sorted(comparator).collect(Collectors.toList());
-
+    public List<Meal> getAll(int userId) {
+        return repository.values().stream().filter(x -> x.getUserId() == userId).sorted(comparator).collect(Collectors.toList());
     }
-    Comparator<Meal> comparator = new Comparator<Meal>() {
-        @Override
-        public int compare(Meal meal, Meal meal1) {
-            return meal.getDate().compareTo(meal1.getDate());
-        }
-    };
+
+    Comparator<Meal> comparator = (meal, meal1) -> meal1.getDate().compareTo(meal.getDate());
 }
 
