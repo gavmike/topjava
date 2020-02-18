@@ -40,7 +40,7 @@ public class MealServlet extends HttpServlet {
         );
         log.info(meal.isNew() ? "Create {}" : "Update {}", meal);
         if (id.isEmpty()) mealRestController.create(meal);
-        if (!id.isEmpty()) mealRestController.update(meal);
+        if (!id.isEmpty()) mealRestController.update(meal,Integer.parseInt(id));
         response.sendRedirect("meals");
     }
 

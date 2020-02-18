@@ -22,7 +22,7 @@ public class SpringMain {
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
            // mealRestController.delete(3);
             //System.out.println(mealRestController.getAll());
-            mealRestController.update(new Meal(1,LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 4444,1));
+            mealRestController.update(new Meal(1,LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 4444,1),1);
             System.out.println(mealRestController.get(1));
             mealRestController.delete(6);
 
