@@ -33,10 +33,12 @@ public class InMemoryMealRepository implements MealRepository {
             return meal;
         }
         // handle case: update, but not present in storage
+        if(repository.get(meal.getId())==null) return null;
         else if(repository.get(meal.getId()).getUserId() == userId) {
             log.info("updateInMemory {}", meal);
-            int oldUserId = repository.get(meal.getId()).getUserId();
-            meal.setUserId(oldUserId);
+
+            //int oldUserId = repository.get(meal.getId()).getUserId();
+            meal.setUserId(userId);
             return repository.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
         }
         else  return null;
@@ -45,8 +47,12 @@ public class InMemoryMealRepository implements MealRepository {
 
     @Override
     public boolean delete(int id, int userId) {
-        if (repository.get(id).getUserId() == userId) return repository.remove(id) != null;
-        if(repository.get(id)==null) return false;
+        if(repository.get(id)==null){
+            return false;
+        }
+        else if (repository.get(id).getUserId() == userId) {
+            return repository.remove(id) != null;
+        }
         else return false;
     }
 
@@ -64,6 +70,6 @@ public class InMemoryMealRepository implements MealRepository {
         return repository.values().stream().filter(x -> x.getUserId() == userId).sorted(comparator).collect(Collectors.toList());
     }
 
-    Comparator<Meal> comparator = (meal, meal1) -> meal1.getDate().compareTo(meal.getDate());
+    Comparator<Meal> comparator = Comparator.comparing(Meal::getDate);
 }
 
