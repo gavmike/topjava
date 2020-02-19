@@ -18,7 +18,7 @@ public class SpringMain {
             //InMemoryUserRepository inMemoryUserRepository = (InMemoryUserRepository)new InMemoryUserRepository();
             MealRestController mealRestController = appCtx.getBean(MealRestController.class);
             System.out.println(mealRestController.getAll());
-            System.out.println(mealRestController.getAllWithTimeFilter(LocalTime.of(1,00), LocalTime.of(22,00),1, LocalDate.of(2020,1,1),LocalDate.of(2020,12,12)));
+            System.out.println(mealRestController.getAllWithTimeFilter(LocalTime.of(1,00), LocalTime.of(22,00), LocalDate.of(2020,1,1),LocalDate.of(2020,12,12)));
            // mealRestController.delete(3);
             //System.out.println(mealRestController.getAll());
            // mealRestController.update(new Meal(1,LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 4444,1),1);

@@ -53,7 +53,9 @@ public class MealRestController {
         log.info("userId {}", userId);
         return mealService.get(id,userId);
     }
-    public List<MealTo> getAllWithTimeFilter(LocalTime start, LocalTime end, int userId, LocalDate startDate, LocalDate endTime) {
+    public List<MealTo> getAllWithTimeFilter(LocalTime start, LocalTime end,  LocalDate startDate, LocalDate endTime) {
+        log.info("getAllFilter");
+        int userId = SecurityUtil.authUserId();
         return  MealsUtil.getFilteredTos(mealService.getAll(userId),MealsUtil.DEFAULT_CALORIES_PER_DAY,start,end)
                 .stream().filter(x->x.getDateTime().toLocalDate().isBefore(endTime)).filter(x->x.getDateTime().toLocalDate().isAfter(startDate)).collect(Collectors.toList());
     }
