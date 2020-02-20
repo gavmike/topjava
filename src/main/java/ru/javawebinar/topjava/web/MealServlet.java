@@ -36,7 +36,7 @@ public class MealServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String id = request.getParameter("id");
         String filter = request.getParameter("filter");
-        if(filter == null) {
+        if (filter == null) {
             Meal meal = new Meal(id.isEmpty() ? null : Integer.valueOf(id),
                     LocalDateTime.parse(request.getParameter("dateTime")),
                     request.getParameter("description"),
@@ -47,16 +47,15 @@ public class MealServlet extends HttpServlet {
             if (id.isEmpty()) mealRestController.create(meal);
             if (!id.isEmpty()) mealRestController.update(meal, Integer.parseInt(id));
             response.sendRedirect("meals");
-        }
-        else {
+        } else {
             LocalTime startTime = LocalTime.parse(request.getParameter("startTime"));
-            log.info( "startTime {}" , startTime);
+            log.info("startTime {}", startTime);
             LocalTime endTime = LocalTime.parse(request.getParameter("endTime"));
             LocalDate startDate = LocalDate.parse(request.getParameter("startDate"));
             LocalDate endDate = LocalDate.parse(request.getParameter("endDate"));
 
-            request.setAttribute("meals",mealRestController.getAllWithTimeFilter(startTime,endTime,startDate,endDate));
-            request.getRequestDispatcher("meals.jsp").forward(request,response);
+            request.setAttribute("meals", mealRestController.getAllWithTimeFilter(startTime, endTime, startDate, endDate));
+            request.getRequestDispatcher("meals.jsp").forward(request, response);
 
         }
     }

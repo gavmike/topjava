@@ -33,33 +33,30 @@ public class InMemoryMealRepository implements MealRepository {
             return meal;
         }
         // handle case: update, but not present in storage
-        if(repository.get(meal.getId())==null) return null;
-        else if(repository.get(meal.getId()).getUserId() == userId) {
+        if (repository.get(meal.getId()) == null) return null;
+        else if (repository.get(meal.getId()).getUserId() == userId) {
             log.info("updateInMemory {}", meal);
 
             //int oldUserId = repository.get(meal.getId()).getUserId();
             meal.setUserId(userId);
             return repository.computeIfPresent(meal.getId(), (id, oldMeal) -> meal);
-        }
-        else  return null;
+        } else return null;
 
     }
 
     @Override
     public boolean delete(int id, int userId) {
-        if(repository.get(id)==null){
+        if (repository.get(id) == null) {
             return false;
-        }
-        else if (repository.get(id).getUserId() == userId) {
+        } else if (repository.get(id).getUserId() == userId) {
             return repository.remove(id) != null;
-        }
-        else return false;
+        } else return false;
     }
 
     @Override
     public Meal get(int id, int userId) {
         log.info("getFromDao {}", repository.get(id).getUserId());
-        if(repository.get(id)==null) return null;
+        if (repository.get(id) == null) return null;
         if (repository.get(id).getUserId() == userId)
             return repository.get(id);
         else return null;

@@ -32,7 +32,7 @@ public class InMemoryUserRepository implements UserRepository {
             user.setId(counter.incrementAndGet());
             usersStorage.put(user.getId(), user);
             return user;
-        } else  {
+        } else {
             return usersStorage.computeIfPresent(user.getId(), (id, oldUser) -> user);
         }
     }
@@ -52,7 +52,7 @@ public class InMemoryUserRepository implements UserRepository {
     @Override
     public User getByEmail(String email) {
         log.info("getByEmail {}", email);
-       return usersStorage.entrySet().stream().filter(x->x.getValue().getEmail().equals(email)).findFirst().orElse(null).getValue();
+        return Objects.requireNonNull(usersStorage.entrySet().stream().filter(x -> x.getValue().getEmail().equals(email)).findFirst().orElse(null)).getValue();
     }
 
     private Comparator<User> comparator = Comparator.comparing(AbstractNamedEntity::getName);
