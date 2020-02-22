@@ -2,23 +2,27 @@ package ru.javawebinar.topjava;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.javawebinar.topjava.model.Role;
-import ru.javawebinar.topjava.model.User;
-import ru.javawebinar.topjava.to.MealTo;
-import ru.javawebinar.topjava.web.meal.MealRestController;
-import ru.javawebinar.topjava.web.user.AdminRestController;
+import ru.javawebinar.topjava.repository.MealRepository;
+import ru.javawebinar.topjava.repository.jdbc.JdbcMealRepository;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
 
 public class SpringMain {
     public static void main(String[] args) {
         // java 7 automatic resource management
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
-            System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
+            MealRepository mealRepository = (MealRepository) appCtx.getBean(JdbcMealRepository.class);
+            //System.out.println(mealRepository.get(100002,100000));
+         // Meal newMeal =  new Meal(100003,LocalDateTime.now(),"diner",1111);
+            //System.out.println(newMeal.isNew());
+            System.out.println(mealRepository.getBetweenHalfOpen(LocalDateTime.of(2010, Month.JANUARY, 30, 10, 0),
+                    LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0),100_001));
+            mealRepository.delete(100_003,100_001);
+
+           // mealRepository.save(newMeal,100001);
+           // System.out.println(mealRepository.getAll(100000));
+            /*System.out.println("Bean definition names: " + Arrays.toString(appCtx.getBeanDefinitionNames()));
             AdminRestController adminUserController = appCtx.getBean(AdminRestController.class);
             adminUserController.create(new User(null, "userName", "email@mail.ru", "password", Role.ROLE_ADMIN));
             System.out.println();
@@ -30,7 +34,7 @@ public class SpringMain {
                             LocalDate.of(2020, Month.JANUARY, 31), LocalTime.of(11, 0));
             filteredMealsWithExcess.forEach(System.out::println);
             System.out.println();
-            System.out.println(mealController.getBetweenHalfOpen(null, null, null, null));
+            System.out.println(mealController.getBetweenHalfOpen(null, null, null, null));*/
         }
     }
 }
