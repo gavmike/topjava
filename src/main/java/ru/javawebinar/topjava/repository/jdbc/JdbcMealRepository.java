@@ -21,43 +21,35 @@ public class JdbcMealRepository implements MealRepository {
     @Override
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
-            jdbcTemplate.update("insert into meals(date, description, calories, user_id) values (?,?,?,?)", meal.getDate(), meal.getDescription(), meal.getCalories(), userId);
+            jdbcTemplate.update("insert into meals(dateTime, description, calories, user_id) values (?,?,?,?)", meal.getDate(), meal.getDescription(), meal.getCalories(), userId);
             return meal;
         } else {
-            jdbcTemplate.update("update  meals set  date =?, description = ?, calories =?  where id =? AND user_id =?" , meal.getDate(), meal.getDescription(), meal.getCalories(), meal.getId(),userId);
+            jdbcTemplate.update("update  meals set  dateTime =?, description = ?, calories =?  where id =? AND user_id =?", meal.getDate(), meal.getDescription(), meal.getCalories(), meal.getId(), userId);
             return meal;
         }
-
     }
 
     @Override
     public boolean delete(int id, int userId) {
-       return jdbcTemplate.update("delete from meals where id = ? and user_id =?", id, userId)!=0;
-
+        return jdbcTemplate.update("delete from meals where id = ? and user_id =?", id, userId) != 0;
     }
 
     @Override
     public Meal get(int id, int userId) {
-
-       return  jdbcTemplate.query("select * from meals where id =?", new Object[] {id},new BeanPropertyRowMapper<>(Meal.class))
-                 .stream()
-                 .findAny()
-                 .orElse(null);
-
-
-
+        return jdbcTemplate.query("select * from meals where id =?", new Object[]{id}, new BeanPropertyRowMapper<>(Meal.class))
+                .stream()
+                .findAny()
+                .orElse(null);
     }
 
     @Override
     public List<Meal> getAll(int userId) {
-     return jdbcTemplate.query("select * from meals",new BeanPropertyRowMapper<>(Meal.class));
-
+        return jdbcTemplate.query("select * from meals order by id", new BeanPropertyRowMapper<>(Meal.class));
     }
 
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-       return jdbcTemplate.query("select * from meals where user_id =? and date < ? and date > ? ",
-               new BeanPropertyRowMapper<>(Meal.class), userId,endDate,startDate );
-
+        return jdbcTemplate.query("select * from meals where user_id =? and dateTime < ? and dateTime > ? order by id",
+                new BeanPropertyRowMapper<>(Meal.class), userId, endDate, startDate);
     }
 }

@@ -16,9 +16,10 @@ public class SpringMain {
             //System.out.println(mealRepository.get(100002,100000));
          // Meal newMeal =  new Meal(100003,LocalDateTime.now(),"diner",1111);
             //System.out.println(newMeal.isNew());
+            System.out.println(mealRepository.getAll(100_000));
             System.out.println(mealRepository.getBetweenHalfOpen(LocalDateTime.of(2010, Month.JANUARY, 30, 10, 0),
                     LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0),100_001));
-            mealRepository.delete(100_003,100_001);
+            //mealRepository.delete(100_003,100_001);
 
            // mealRepository.save(newMeal,100001);
            // System.out.println(mealRepository.getAll(100000));
