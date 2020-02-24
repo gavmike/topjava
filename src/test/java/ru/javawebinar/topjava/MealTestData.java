@@ -17,13 +17,12 @@ public class MealTestData {
     public static final int MEALCREATE_ID =START_SEQ+6;
 
 
-
     public static final Meal MEAL1 = new Meal(MEAL1_ID, LocalDateTime.of(2016, Month.JUNE, 22, 19, 10), "diner", 1222);
     public static final Meal MEAL2 = new Meal(MEAL2_ID, LocalDateTime.of(2017,  Month.JUNE, 22, 12, 10), "lunch", 1000);
     public static final Meal MEAL3 = new Meal(MEAL3_ID, LocalDateTime.of(2018,  Month.JUNE, 22, 13, 10), "diner", 1000);
     public static final Meal MEAL4 = new Meal(MEAL4_ID, LocalDateTime.of(2019,  Month.JUNE, 22, 11, 10), "lunch", 1000);
 
-    public static final Meal MEAL_UPDATE = new Meal(MEAL1_ID, LocalDateTime.of(2019,  Month.JUNE, 22, 11, 10), "lunch", 999);
+    public static final Meal MEAL_UPDATE = new Meal(MEALUPDATE_ID, LocalDateTime.of(2019,  Month.JUNE, 22, 11, 10), "lunch", 999);
     public static final Meal MEAL_CREATE = new Meal( LocalDateTime.of(2019,  Month.JUNE, 22, 11, 10), "lunch", 999);
 
 

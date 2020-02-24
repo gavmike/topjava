@@ -21,10 +21,13 @@ public class JdbcMealRepository implements MealRepository {
     @Override
     public Meal save(Meal meal, int userId) {
         if (meal.isNew()) {
-            jdbcTemplate.update("insert into meals(dateTime, description, calories, user_id) values (?,?,?,?)", meal.getDate(), meal.getDescription(), meal.getCalories(), userId);
+            jdbcTemplate.update("insert into meals(dateTime, description, calories, user_id) values (?,?,?,?)",
+                    meal.getDate(), meal.getDescription(), meal.getCalories(), userId);
             return meal;
         } else {
-            jdbcTemplate.update("update  meals set  dateTime =?, description = ?, calories =?  where id =? AND user_id =?", meal.getDate(), meal.getDescription(), meal.getCalories(), meal.getId(), userId);
+            if (jdbcTemplate.update("update  meals set  dateTime =?, description = ?, calories =?  where id =? AND user_id =?",
+                    meal.getDate(), meal.getDescription(), meal.getCalories(), meal.getId(), userId) == 0) {
+                return null; }
             return meal;
         }
     }
@@ -36,7 +39,7 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public Meal get(int id, int userId) {
-        return jdbcTemplate.query("select * from meals where id =?", new Object[]{id}, new BeanPropertyRowMapper<>(Meal.class))
+               return jdbcTemplate.query("select * from meals where id =? and user_id=?", new BeanPropertyRowMapper<>(Meal.class), id, userId)
                 .stream()
                 .findAny()
                 .orElse(null);
@@ -44,7 +47,7 @@ public class JdbcMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return jdbcTemplate.query("select * from meals where user_id =? order by id", new BeanPropertyRowMapper<>(Meal.class),userId);
+        return jdbcTemplate.query("select * from meals where user_id =? order by id", new BeanPropertyRowMapper<>(Meal.class), userId);
     }
 
     @Override
