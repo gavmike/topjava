@@ -2,11 +2,11 @@ package ru.javawebinar.topjava;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.jdbc.JdbcMealRepository;
 
 import java.time.LocalDateTime;
-import java.time.Month;
 
 public class SpringMain {
     public static void main(String[] args) {
@@ -14,11 +14,12 @@ public class SpringMain {
         try (ConfigurableApplicationContext appCtx = new ClassPathXmlApplicationContext("spring/spring-app.xml")) {
             MealRepository mealRepository = (MealRepository) appCtx.getBean(JdbcMealRepository.class);
             //System.out.println(mealRepository.get(100002,100000));
-         // Meal newMeal =  new Meal(100003,LocalDateTime.now(),"diner",1111);
+         Meal newMeal =  new Meal(100006,LocalDateTime.now(),"NEWdiner",1111);
             //System.out.println(newMeal.isNew());
-            System.out.println(mealRepository.getAll(100_000));
-            System.out.println(mealRepository.getBetweenHalfOpen(LocalDateTime.of(2010, Month.JANUARY, 30, 10, 0),
-                    LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0),100_001));
+            mealRepository.save(newMeal,100_001);
+            //System.out.println(mealRepository.getAll(100_000));
+           // System.out.println(mealRepository.getBetweenHalfOpen(LocalDateTime.of(2010, Month.JANUARY, 30, 10, 0),
+                 //   LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0),100_001));
             //mealRepository.delete(100_003,100_001);
 
            // mealRepository.save(newMeal,100001);
