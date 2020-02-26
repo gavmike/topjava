@@ -1,8 +1,6 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
@@ -34,7 +33,8 @@ public class MealServiceTest {
     @Test
     public void get() {
         Meal meal = mealService.get(MEAL1_ID, USER_ID);
-        Assert.assertEquals(MEAL1, meal);
+        assertThat(MEAL1).isEqualToComparingFieldByField(meal);
+
     }
 
     @Test(expected = NotFoundException.class)
@@ -57,31 +57,33 @@ public class MealServiceTest {
     public void getBetweenHalfOpen() {
         List<Meal> actualList = mealService.getBetweenHalfOpen(LocalDate.of(2016, Month.JUNE, 21),
                 LocalDate.of(2016, Month.JUNE, 23), USER_ID);
-        Assert.assertEquals(Arrays.asList(MEAL1), actualList);
+        assertThat(Arrays.asList(MEAL1)).usingFieldByFieldElementComparator().isEqualTo(actualList);
+
     }
 
     @Test
     public void getAll() {
         List<Meal> actualList = mealService.getAll(USER_ID);
-        Assert.assertEquals(Arrays.asList(MEAL1, MEAL3), actualList);
+        assertThat(Arrays.asList(MEAL1, MEAL3)).usingFieldByFieldElementComparator().isEqualTo(actualList);
+
     }
 
     @Test
     public void update() {
         mealService.update(MEAL_UPDATE, USER_ID);
-        Assert.assertEquals(MEAL_UPDATE, mealService.get(MEALUPDATE_ID, USER_ID));
+        assertThat(MEAL_UPDATE).isEqualToComparingFieldByField(mealService.get(MEALUPDATE_ID, USER_ID));
     }
 
     @Test(expected = NotFoundException.class)
     public void updateForeigner() {
         mealService.update(MEAL_UPDATE, ADMIN_ID);
-
     }
 
     @Test
     public void create() {
-        mealService.create(MEAL_CREATE, USER_ID);
+        Meal createMeal = mealService.create(MEAL_CREATE, USER_ID);
         MEAL_CREATE.setId(MEALCREATE_ID);
-        Assert.assertEquals(MEAL_CREATE, mealService.get(MEALCREATE_ID, USER_ID));
+        assertThat(MEAL_CREATE).isEqualToComparingFieldByField(createMeal);
+        assertThat(MEAL_CREATE).isEqualToComparingFieldByField(mealService.get(MEALCREATE_ID, USER_ID));
     }
 }
