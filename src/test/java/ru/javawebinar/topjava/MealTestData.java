@@ -4,7 +4,9 @@ import ru.javawebinar.topjava.model.Meal;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.Arrays;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class MealTestData {
@@ -23,8 +25,11 @@ public class MealTestData {
     public static final Meal MEAL_UPDATE = new Meal(MEALUPDATE_ID, LocalDateTime.of(2019,  Month.JUNE, 22, 00, 00), "lunch", 999);
     public static final Meal MEAL_CREATE = new Meal( LocalDateTime.of(2019,  Month.JUNE, 22, 11, 10), "lunch", 999);
 
-
-
-
+    public static void assertMatch( Meal actual, Meal expected) {
+        assertThat(expected).isEqualToComparingFieldByField(actual);
+    }
+    public static void assertMatch(Iterable<Meal> actual, Meal... expected) {
+        assertThat(Arrays.asList(expected)).usingFieldByFieldElementComparator().isEqualTo(actual);
+    }
 
 }

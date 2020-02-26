@@ -13,10 +13,8 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
@@ -33,12 +31,11 @@ public class MealServiceTest {
     @Test
     public void get() {
         Meal meal = mealService.get(MEAL1_ID, USER_ID);
-        assertThat(MEAL1).isEqualToComparingFieldByField(meal);
-
+        assertMatch(meal, MEAL1);
     }
 
     @Test(expected = NotFoundException.class)
-    public void getForeiner() {
+    public void getForeigner() {
         Meal meal = mealService.get(MEAL1_ID, ADMIN_ID);
     }
 
@@ -46,6 +43,11 @@ public class MealServiceTest {
     public void deleteIfHave() {
         mealService.delete(MEAL1_ID, USER_ID);
         mealService.get(MEAL1_ID, USER_ID);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void deleteIfForegein() {
+        mealService.delete(MEAL1_ID, ADMIN_ID);
     }
 
     @Test(expected = NotFoundException.class)
@@ -57,21 +59,19 @@ public class MealServiceTest {
     public void getBetweenHalfOpen() {
         List<Meal> actualList = mealService.getBetweenHalfOpen(LocalDate.of(2016, Month.JUNE, 21),
                 LocalDate.of(2016, Month.JUNE, 23), USER_ID);
-        assertThat(Arrays.asList(MEAL1)).usingFieldByFieldElementComparator().isEqualTo(actualList);
-
+        assertMatch(actualList, MEAL1);
     }
 
     @Test
     public void getAll() {
         List<Meal> actualList = mealService.getAll(USER_ID);
-        assertThat(Arrays.asList(MEAL1, MEAL3)).usingFieldByFieldElementComparator().isEqualTo(actualList);
-
+        assertMatch(actualList, MEAL3, MEAL1);
     }
 
     @Test
     public void update() {
         mealService.update(MEAL_UPDATE, USER_ID);
-        assertThat(MEAL_UPDATE).isEqualToComparingFieldByField(mealService.get(MEALUPDATE_ID, USER_ID));
+        assertMatch(mealService.get(MEALUPDATE_ID, USER_ID), MEAL_UPDATE);
     }
 
     @Test(expected = NotFoundException.class)
@@ -83,7 +83,7 @@ public class MealServiceTest {
     public void create() {
         Meal createMeal = mealService.create(MEAL_CREATE, USER_ID);
         MEAL_CREATE.setId(MEALCREATE_ID);
-        assertThat(MEAL_CREATE).isEqualToComparingFieldByField(createMeal);
-        assertThat(MEAL_CREATE).isEqualToComparingFieldByField(mealService.get(MEALCREATE_ID, USER_ID));
+        assertMatch(createMeal, MEAL_CREATE);
+        assertMatch(mealService.get(MEALCREATE_ID, USER_ID), MEAL_CREATE);
     }
 }
