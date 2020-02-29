@@ -19,7 +19,7 @@ import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
 import static ru.javawebinar.topjava.UserTestData.USER_ID;
 
-@ContextConfiguration("classpath:spring/spring-app.xml")
+@ContextConfiguration({"classpath:spring/spring-app.xml","classpath:spring/spring-db.xml"})
 @RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 
@@ -36,7 +36,7 @@ public class MealServiceTest {
 
     @Test(expected = NotFoundException.class)
     public void getForeigner() {
-        Meal meal = mealService.get(MEAL1_ID, ADMIN_ID);
+        mealService.get(MEAL1_ID, ADMIN_ID);
     }
 
     @Test(expected = NotFoundException.class)
@@ -57,8 +57,8 @@ public class MealServiceTest {
 
     @Test
     public void getBetweenHalfOpen() {
-        List<Meal> actualList = mealService.getBetweenHalfOpen(LocalDate.of(2016, Month.JUNE, 21),
-                LocalDate.of(2016, Month.JUNE, 23), USER_ID);
+        List<Meal> actualList = mealService.getBetweenHalfOpen(LocalDate.of(2016, Month.JUNE, 22),
+                LocalDate.of(2016, Month.JUNE, 22), USER_ID);
         assertMatch(actualList, MEAL1);
     }
 

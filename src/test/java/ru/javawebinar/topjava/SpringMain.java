@@ -7,6 +7,7 @@ import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.repository.jdbc.JdbcMealRepository;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 
 public class SpringMain {
     public static void main(String[] args) {
@@ -17,7 +18,9 @@ public class SpringMain {
          Meal newMeal =  new Meal(100006,LocalDateTime.now(),"NEWdiner",1111);
             //System.out.println(newMeal.isNew());
             //mealRepository.save(newMeal,100_001);
-            mealRepository.getAll(100_000).forEach(x->System.out.println(x));
+            //mealRepository.getAll(100_000).forEach(System.out::println);
+            mealRepository.getBetweenHalfOpen(LocalDateTime.of(2019, Month.JUNE, 22, 11, 10),
+                    LocalDateTime.of(2019, Month.JUNE, 22, 11, 11),100001).forEach(System.out::println);
             //System.out.println(mealRepository.getAll(100_000));
            // System.out.println(mealRepository.getBetweenHalfOpen(LocalDateTime.of(2010, Month.JANUARY, 30, 10, 0),
                  //   LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0),100_001));
