@@ -54,7 +54,7 @@
 
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
-                  p:showSql="${jpa.showSql}">
+                  p:showSql="false">
             </bean>
         </property>
     </bean>

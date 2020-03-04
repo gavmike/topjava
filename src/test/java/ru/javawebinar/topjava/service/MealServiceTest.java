@@ -1,10 +1,12 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Assert;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.Stopwatch;
+import org.junit.runner.Description;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
@@ -16,6 +18,9 @@ import ru.javawebinar.topjava.util.exception.NotFoundException;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.ADMIN_ID;
@@ -28,12 +33,40 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+    private static final Logger log = LoggerFactory.getLogger(MealServiceTest.class);
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
     @Autowired
     private MealService service;
     @Autowired
     private MealRepository repository;
+    private static Map<String, Long> timeTest = new HashMap<>();
+    @Rule
+    public final Stopwatch stopwatch = new Stopwatch() {
+        protected void succeeded(long nanos, Description description) {
+            log.info(description.getMethodName() + " succeeded, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
+        }
+
+        protected void failed(long nanos, Throwable e, Description description) {
+            log.info(description.getMethodName() + " failed, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
+        }
+
+        protected void skipped(long nanos, AssumptionViolatedException e,
+                               Description description) {
+            log.info(description.getMethodName() + " skipped, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
+        }
+
+        protected void finished(long nanos, Description description) {
+            timeTest.put(description.getMethodName(), nanos);
+            // log.info(description.getMethodName() + " finished, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
+        }
+
+    };
+
+    @AfterClass
+    public static void resultTime() {
+        timeTest.forEach((x, y) -> System.out.println(x + "-" + TimeUnit.NANOSECONDS.toMillis(y)));
+    }
 
     @Test
     public void delete() throws Exception {
