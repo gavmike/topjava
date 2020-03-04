@@ -44,28 +44,27 @@ public class MealServiceTest {
     @Rule
     public final Stopwatch stopwatch = new Stopwatch() {
         protected void succeeded(long nanos, Description description) {
-            log.info(description.getMethodName() + " succeeded, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
+            log.info(description.getMethodName() + "-" + TimeUnit.NANOSECONDS.toMillis(nanos) + "ms");
         }
 
         protected void failed(long nanos, Throwable e, Description description) {
-            log.info(description.getMethodName() + " failed, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
+            log.info(description.getMethodName() + "-" + TimeUnit.NANOSECONDS.toMillis(nanos) + "ms");
         }
 
         protected void skipped(long nanos, AssumptionViolatedException e,
                                Description description) {
-            log.info(description.getMethodName() + " skipped, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
+            log.info(description.getMethodName() + "-" + TimeUnit.NANOSECONDS.toMillis(nanos) + "ms");
         }
 
         protected void finished(long nanos, Description description) {
             timeTest.put(description.getMethodName(), nanos);
-            // log.info(description.getMethodName() + " finished, time taken " + TimeUnit.NANOSECONDS.toMillis(nanos));
         }
 
     };
 
     @AfterClass
     public static void resultTime() {
-        timeTest.forEach((x, y) -> System.out.println(x + "-" + TimeUnit.NANOSECONDS.toMillis(y)));
+        timeTest.forEach((x, y) -> log.info(x + "-" + TimeUnit.NANOSECONDS.toMillis(y) + "ms"));
     }
 
     @Test
@@ -78,7 +77,6 @@ public class MealServiceTest {
     public void deleteNotFound() throws Exception {
         thrown.expect(NotFoundException.class);
         service.delete(1, USER_ID);
-
     }
 
     @Test

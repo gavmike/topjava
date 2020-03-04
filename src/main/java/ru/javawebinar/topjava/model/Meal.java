@@ -19,7 +19,7 @@ import java.time.LocalTime;
 @Entity
 
 
-@Table(name = "meals",uniqueConstraints = {@UniqueConstraint(columnNames ={"date_time","user_id"} ,  name = "meals_unique_user_datetime_idx")})
+@Table(name = "meals",uniqueConstraints = {@UniqueConstraint(columnNames ={"user_id","date_time"} ,  name = "meals_unique_user_datetime_idx")})
 @Access(AccessType.FIELD)
 public class Meal extends AbstractBaseEntity {
 
