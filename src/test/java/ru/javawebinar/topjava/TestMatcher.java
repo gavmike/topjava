@@ -1,6 +1,6 @@
 package ru.javawebinar.topjava;
 
-import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,7 +11,7 @@ public class TestMatcher<T> {
         this.fieldsToIgnore = fieldsToIgnore;
     }
 
-    public static <T> TestMatcher<T> of(String... fieldsToIgnore) {
+    public static <T> TestMatcher<T> usingFieldsComparator(String... fieldsToIgnore) {
         return new TestMatcher<>(fieldsToIgnore);
     }
 
@@ -20,7 +20,7 @@ public class TestMatcher<T> {
     }
 
     public void assertMatch(Iterable<T> actual, T... expected) {
-        assertMatch(actual, Arrays.asList(expected));
+        assertMatch(actual, List.of(expected));
     }
 
     public void assertMatch(Iterable<T> actual, Iterable<T> expected) {

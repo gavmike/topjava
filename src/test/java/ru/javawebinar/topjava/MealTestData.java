@@ -3,13 +3,14 @@ package ru.javawebinar.topjava;
 import ru.javawebinar.topjava.model.Meal;
 
 import java.time.Month;
-import java.util.Arrays;
 import java.util.List;
 
 import static java.time.LocalDateTime.of;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class MealTestData {
+    public static TestMatcher<Meal> MEAL_MATCHER = TestMatcher.usingFieldsComparator("user");
+
     public static final int MEAL1_ID = START_SEQ + 2;
     public static final int ADMIN_MEAL_ID = START_SEQ + 9;
 
@@ -23,15 +24,13 @@ public class MealTestData {
     public static final Meal ADMIN_MEAL1 = new Meal(ADMIN_MEAL_ID, of(2020, Month.JANUARY, 31, 14, 0), "Админ ланч", 510);
     public static final Meal ADMIN_MEAL2 = new Meal(ADMIN_MEAL_ID + 1, of(2020, Month.JANUARY, 31, 21, 0), "Админ ужин", 1500);
 
-    public static final List<Meal> MEALS = Arrays.asList(MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
+    public static final List<Meal> MEALS = List.of(MEAL7, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1);
 
-    public static Meal getCreated() {
+    public static Meal getNew() {
         return new Meal(null, of(2020, Month.JUNE, 1, 18, 0), "Созданный ужин", 300);
     }
 
     public static Meal getUpdated() {
         return new Meal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
     }
-
-    public static TestMatcher<Meal> MEAL_MATCHER = TestMatcher.of();
 }
