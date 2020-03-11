@@ -43,6 +43,7 @@ public class Meal extends AbstractBaseEntity {
     @NotNull
     private User user;
 
+
     public Meal() {
     }
 

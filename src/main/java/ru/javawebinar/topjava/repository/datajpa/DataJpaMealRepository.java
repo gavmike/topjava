@@ -18,6 +18,8 @@ public class DataJpaMealRepository implements MealRepository {
     private CrudMealRepository crudRepository;
     @Autowired
     private CrudUserRepository userRepository;
+    @Autowired
+    private MealRepository mealRepository;
 
     @Override
     @Transactional
@@ -49,4 +51,10 @@ public class DataJpaMealRepository implements MealRepository {
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return crudRepository.getBetween(startDateTime, endDateTime, userId);
     }
+    @Override
+  public Meal getMealWithUser(int id, int userId ){
+
+        return crudRepository.getMealWithUser(id,userId);
+    }
+
 }
