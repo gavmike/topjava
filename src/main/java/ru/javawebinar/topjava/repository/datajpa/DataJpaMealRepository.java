@@ -8,7 +8,6 @@ import ru.javawebinar.topjava.repository.MealRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 
@@ -43,18 +42,18 @@ public class DataJpaMealRepository implements MealRepository {
 
     @Override
     public List<Meal> getAll(int userId) {
-        return crudRepository.findAllByUserId(userId).stream().sorted(((meal, t1) -> t1.getId().compareTo(meal.getId())))
-                .collect(Collectors.toList());
+        return crudRepository.findAllByUserIdOrderByDateTimeDesc(userId);
     }
 
     @Override
     public List<Meal> getBetweenHalfOpen(LocalDateTime startDateTime, LocalDateTime endDateTime, int userId) {
         return crudRepository.getBetween(startDateTime, endDateTime, userId);
     }
-    @Override
-  public Meal getMealWithUser(int id, int userId ){
 
-        return crudRepository.getMealWithUser(id,userId);
+    @Override
+    public Meal getMealWithUser(int id, int userId) {
+
+        return crudRepository.getMealWithUser(id, userId);
     }
 
 }

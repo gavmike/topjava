@@ -19,6 +19,7 @@ public class MealService {
 
 
     private final MealRepository repository;
+
     @Autowired
     public MealService(MealRepository repository) {
         this.repository = repository;
@@ -49,7 +50,8 @@ public class MealService {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
     }
-    public Meal getMealWithUser(int id, int userId){
+
+    public Meal getMealWithUser(int id, int userId) {
         return repository.getMealWithUser(id, userId);
     }
 }
