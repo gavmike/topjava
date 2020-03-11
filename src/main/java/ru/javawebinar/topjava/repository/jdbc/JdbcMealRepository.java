@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Repository
+
 public abstract class JdbcMealRepository <T> implements MealRepository {
 
     private static final RowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
@@ -39,12 +39,7 @@ public abstract class JdbcMealRepository <T> implements MealRepository {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
     public abstract T  getDate(LocalDateTime localDateTime);
-  /*  private  Date date;
 
-    public static   abstract class Date <T> {
-
-        public abstract T  getDate(LocalDateTime localDateTime);
-    }*/
     @Repository
     @Profile(Profiles.POSTGRES_DB)
     public static class DateTimePostgres extends JdbcMealRepository<LocalDateTime>{
