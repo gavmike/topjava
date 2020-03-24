@@ -1,4 +1,4 @@
-package ru.javawebinar.topjava.web;
+package ru.javawebinar.topjava.web.meal;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +12,7 @@ import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealTo;
 import ru.javawebinar.topjava.util.MealsUtil;
+import ru.javawebinar.topjava.web.SecurityUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -48,10 +49,8 @@ public class JspMealController {
 
     @GetMapping(value = "create")
     public String create(HttpServletRequest request) {
-        int userId = SecurityUtil.authUserId();
         final Meal meal =
                 new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000);
-
         request.setAttribute("meal", meal);
         return "mealForm";
     }
