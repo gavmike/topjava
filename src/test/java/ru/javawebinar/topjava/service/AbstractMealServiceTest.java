@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -28,8 +27,7 @@ public abstract class AbstractMealServiceTest extends AbstractServiceTest {
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     private MealRepository repository;
 
-    @Autowired
-    Environment environment;
+
 
     @Test
     public void delete() throws Exception {
