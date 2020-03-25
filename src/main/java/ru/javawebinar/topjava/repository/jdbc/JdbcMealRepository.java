@@ -12,13 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.repository.MealRepository;
 
+import javax.validation.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional(readOnly = true)
 public class JdbcMealRepository implements MealRepository {
-
+    /*  @Autowired
+    Validator validator;*/
     private static final RowMapper<Meal> ROW_MAPPER = BeanPropertyRowMapper.newInstance(Meal.class);
 
     private final JdbcTemplate jdbcTemplate;
@@ -39,13 +43,25 @@ public class JdbcMealRepository implements MealRepository {
     @Override
     @Transactional
     public Meal save(Meal meal, int userId) {
+
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
                 .addValue("description", meal.getDescription())
                 .addValue("calories", meal.getCalories())
                 .addValue("date_time", meal.getDateTime())
                 .addValue("user_id", userId);
-
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<Meal>> validate = validator.validate(meal);
+        validator.validate(meal);
+        for (ConstraintViolation<Meal> error : validate) {
+            System.out.println(error.getMessage());
+            System.out.println(error.getInvalidValue());
+        }
+        if (validate.size() > 0) {
+            throw new ConstraintViolationException("error", new HashSet<ConstraintViolation<Meal>>(validate));
+        }
+        validatorFactory.close();
         if (meal.isNew()) {
             Number newId = insertMeal.executeAndReturnKey(map);
             meal.setId(newId.intValue());

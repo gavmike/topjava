@@ -14,6 +14,7 @@ import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.repository.UserRepository;
 
+import javax.validation.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.*;
@@ -21,6 +22,8 @@ import java.util.*;
 @Repository
 @Transactional(readOnly = true)
 public class JdbcUserRepository implements UserRepository {
+   /* @Autowired
+    Validator validator;*/
 
     private static final BeanPropertyRowMapper<User> ROW_MAPPER = BeanPropertyRowMapper.newInstance(User.class);
 
@@ -43,6 +46,13 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     @Transactional
     public User save(User user) {
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        Set<ConstraintViolation<User>> validate = validator.validate(user);
+        if (validate.size() > 0) {
+            throw new ConstraintViolationException("error", new HashSet<ConstraintViolation<User>>(validate));
+        }
+        validatorFactory.close();
         BeanPropertySqlParameterSource parameterSource = new BeanPropertySqlParameterSource(user);
 
         if (user.isNew()) {
@@ -81,7 +91,7 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         Map<Integer, Set<Role>> map = new HashMap<>();
-        jdbcTemplate.query("select * from user_roles",  rs -> {
+        jdbcTemplate.query("select * from user_roles", rs -> {
             Integer userId = rs.getInt("user_id");
             Role role = Role.valueOf(rs.getString("role"));
 
