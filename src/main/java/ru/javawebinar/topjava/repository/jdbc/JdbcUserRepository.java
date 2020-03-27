@@ -59,13 +59,15 @@ public class JdbcUserRepository implements UserRepository {
             Number newKey = insertUser.executeAndReturnKey(parameterSource);
             user.setId(newKey.intValue());
             insertRoles(user);
-        } else if (namedParameterJdbcTemplate.update(
+        } else{ if (namedParameterJdbcTemplate.update(
                 "UPDATE users SET name=:name, email=:email, password=:password, " +
                         "registered=:registered, enabled=:enabled, calories_per_day=:caloriesPerDay WHERE id=:id", parameterSource) == 0) {
+
             return null;
         }
         deleteRoles(user);
         insertRoles(user);
+        }
         return user;
     }
 
@@ -78,14 +80,14 @@ public class JdbcUserRepository implements UserRepository {
     @Override
     public User get(int id) {
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE id=?", ROW_MAPPER, id);
-        return setRoles(DataAccessUtils.singleResult(users));
+        return setRoles(users);
     }
 
     @Override
     public User getByEmail(String email) {
 //        return jdbcTemplate.queryForObject("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
         List<User> users = jdbcTemplate.query("SELECT * FROM users WHERE email=?", ROW_MAPPER, email);
-        return setRoles(DataAccessUtils.singleResult(users));
+        return setRoles(users);
     }
 
     @Override
@@ -127,11 +129,13 @@ public class JdbcUserRepository implements UserRepository {
         jdbcTemplate.update("delete  from user_roles where user_id=?", user.getId());
     }
 
-    public User setRoles(User user) {
+    public User setRoles(List<User> users) {
+      User user=  DataAccessUtils.singleResult(users);
         if (user != null) {
 
             List<Role> role = jdbcTemplate.queryForList("select role from user_roles where user_id=?", Role.class, user.getId());
             user.setRoles(role);
+
         }
         return user;
     }

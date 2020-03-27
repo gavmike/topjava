@@ -5,6 +5,10 @@
 
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
+<jsp:include page="fragments/headTag.jsp"/>
+<body>
+<jsp:include page="fragments/bodyHeader.jsp"/>
+
 <head>
     <title><spring:message code="meal.title"/></title>
     <link rel="stylesheet" href="css/style.css">
@@ -64,5 +68,6 @@
         </c:forEach>
     </table>
 </section>
+<jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

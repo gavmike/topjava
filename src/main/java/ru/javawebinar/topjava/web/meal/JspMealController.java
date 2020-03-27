@@ -34,8 +34,9 @@ public class JspMealController extends AbstractMealController {
 
     @GetMapping(value = "/{id}", params = "delete")
     public String delete(@PathVariable("id") Integer id) {
-        int userId = SecurityUtil.authUserId();
-        service.delete(id, userId);
+     /*   int userId = SecurityUtil.authUserId();
+        service.delete(id, userId);*/
+        super.delete(id);
         return "redirect:/meals";
     }
 
@@ -58,17 +59,19 @@ public class JspMealController extends AbstractMealController {
     @PostMapping(value = "/save")
     public String save(HttpServletRequest request) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
-        int userId = SecurityUtil.authUserId();
+      //  int userId = SecurityUtil.authUserId();
         Meal meal = new Meal(
                 LocalDateTime.parse(request.getParameter("dateTime")),
                 request.getParameter("description"),
                 Integer.parseInt(request.getParameter("calories")));
 
         if (StringUtils.isEmpty(request.getParameter("id"))) {
-            service.create(meal, userId);
+           // service.create(meal, userId);
+            super.create(meal);
         } else {
             meal.setId(Integer.parseInt(request.getParameter("id")));
-            service.update(meal, userId);
+            //service.update(meal, userId);
+            super.update(meal,meal.getId());
         }
         return "redirect:/meals";
     }
@@ -76,7 +79,8 @@ public class JspMealController extends AbstractMealController {
     @GetMapping
     public String getAll(Model model) {
         int userId = SecurityUtil.authUserId();
-        model.addAttribute("meals", MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay()));
+       // model.addAttribute("meals", MealsUtil.getTos(service.getAll(userId), SecurityUtil.authUserCaloriesPerDay()));
+       model.addAttribute("meals", super.getAll());
         return "meals";
     }
 
