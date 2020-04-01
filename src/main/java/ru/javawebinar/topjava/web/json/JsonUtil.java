@@ -19,7 +19,7 @@ public class JsonUtil {
         }
     }
 
-    public static <T> T readValue(String json, Class<T> clazz) {
+    public static <T> T readValue(String  json, Class<T> clazz) {
         try {
             return getMapper().readValue(json, clazz);
         } catch (IOException e) {
