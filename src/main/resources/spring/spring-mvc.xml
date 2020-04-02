@@ -7,8 +7,8 @@
 
     <bean class="ru.javawebinar.topjava.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
 
-   <!-- <mvc:annotation-driven>-->
-    <mvc:annotation-driven conversion-service="conversionService">
+    <!-- <mvc:annotation-driven>-->
+    <mvc:annotation-driven conversion-service="formatter">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>
@@ -24,21 +24,20 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
- <!--   <bean class ="ru.javawebinar.topjava.util.TimeFormatter" id="dateFormatter"/>-->
-    <bean class ="ru.javawebinar.topjava.util.TimeFormatter" id="timeFormatter"/>
-   <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="formatter">
-       <property name="formatters">
-<set>
-           <bean class ="ru.javawebinar.topjava.util.TimeFormatter" id="dateFormatter"/>
-                <!-- ref="timeFormatter"></property>-->
-   </set>
-</property>
+
+    <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="formatter">
+        <property name="formatters">
+            <set>
+                <bean class="ru.javawebinar.topjava.util.TimeFormatter" id="timeFormatter"/>
+                <bean class="ru.javawebinar.topjava.util.DateFormater" id="dateFormatter"/>
+             </set>
+        </property>
 
     </bean>
- <!--   <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="formatter2">
-        <property name="formatters" ref="dateFormatter"></property>
+    <!--   <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" id="formatter2">
+           <property name="formatters" ref="dateFormatter"></property>
 
-    </bean>-->
+       </bean>-->
     <context:component-scan base-package="ru.javawebinar.**.web"/>
 
     <!--  all resources inside folder src/main/webapp/resources are mapped so they can be referred to inside JSP files -->
@@ -48,17 +47,17 @@
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp"/>
 
-<!--
-    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
-          p:cacheSeconds="60"
-          p:defaultEncoding="UTF-8">
-        <property name="basenames">
-            <list>
-                <value>messages/app</value>
-            </list>
-        </property>
-    </bean>
--->
+    <!--
+        <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
+              p:cacheSeconds="60"
+              p:defaultEncoding="UTF-8">
+            <property name="basenames">
+                <list>
+                    <value>messages/app</value>
+                </list>
+            </property>
+        </bean>
+    -->
     <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
           p:cacheSeconds="5"
           p:defaultEncoding="UTF-8">
