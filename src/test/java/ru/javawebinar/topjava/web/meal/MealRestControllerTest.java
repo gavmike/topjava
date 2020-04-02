@@ -49,7 +49,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MEALTo_MATCHER.contentJson(MealsUtil.getTos(MEALS,SecurityUtil.authUserCaloriesPerDay())));
+                .andExpect(MEALTO_MATCHER.contentJson(MealsUtil.getTos(MEALS,SecurityUtil.authUserCaloriesPerDay())));
     }
 
     @Test
@@ -80,7 +80,7 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MEALTo_MATCHER.contentJson((MealsUtil.getTos(List.of(MEAL4), 55))));
+                .andExpect(MEALTO_MATCHER.contentJson((MealsUtil.getTos(List.of(MEAL4), 55))));
 
     }
     @Test
@@ -89,6 +89,6 @@ class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(MEALTo_MATCHER.contentJson((MealsUtil.getTos(List.of(MEAL4), 55))));
+                .andExpect(MEALTO_MATCHER.contentJson((MealsUtil.getTos(List.of(MEAL4), 55))));
     }
 }
