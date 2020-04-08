@@ -35,4 +35,36 @@ $(function () {
             })
         }
     );
+filter();
+resetFilter();
 });
+
+
+
+function filter(){
+    $("#filterButton").click(function(){
+        $.ajax({
+            type: "GET",
+            url: "ajax/meals/filter",
+            data: $('#filterForm').serialize()
+        }).done(function () {
+
+            updateTable();
+            successNoty("Filtered");
+        });
+    });
+}
+
+
+
+function resetFilter() {
+    $("#resetButton").click(function () {
+      $("#filterForm").each(function () {
+          $(this).find(":input").val("");
+      });
+        $("#filterButton").click();
+
+        });
+
+}
+
