@@ -35,29 +35,36 @@ $(function () {
             })
         }
     );
-filter();
-resetFilter();
+
 });
 
 
 
-function filter(){
+/*function filter(){
     $("#filterButton").click(function(){
         $.ajax({
             type: "GET",
             url: "ajax/meals/filter",
             data: $('#filterForm').serialize()
-        }).done(function () {
+        }).done(function (data) {
+            $("#editRow").modal('hide');
 
-            updateTable();
-            successNoty("Filtered");
+            //datatableApiMeal.clear().rows.add(data).draw();
+            tab.clear().rows.add(data).draw();
+           /!* updateTable();
+            successNoty("Filtered");*!/
         });
     });
+}*/
+
+function filter() {
+    $.get(context.ajaxUrl+"filter",$('#filterForm').serialize())
+        .done(function (data) {
+            context.datatableApi.clear().rows.add(data).draw()});
 }
 
 
-
-function resetFilter() {
+/*function resetFilter() {
     $("#resetButton").click(function () {
       $("#filterForm").each(function () {
           $(this).find(":input").val("");
@@ -66,5 +73,5 @@ function resetFilter() {
 
         });
 
-}
+}*/
 

@@ -32,10 +32,11 @@
                     <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
                 </dl>
              <%--     <button type="submit"><spring:message code="meal.filter"/></button> --%>
-                <button class="btn btn-primary"id="filterButton"   onclick="filter()">
+              <%--  <button class="btn btn-primary"id="filterButton"   onclick="filter()">
                 <spring:message code="meal.filter"/>
                 <span class="fa fa-plus"></span>
-                 </button>
+                 </button>--%>
+              <button type="button" class="btn btn-primary" onclick="filter()"><spring:message code="meal.filter"/></button>
                   <button class="btn btn-primary" id="resetButton"  onclick="filter()">
                                  <spring:message code="meal.resetFilter"/>
                                  <span class="fa fa-plus"></span>

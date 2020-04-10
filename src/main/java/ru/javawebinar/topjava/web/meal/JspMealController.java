@@ -60,7 +60,7 @@ public class JspMealController extends AbstractMealController {
         LocalTime startTime = parseLocalTime(request.getParameter("startTime"));
         LocalTime endTime = parseLocalTime(request.getParameter("endTime"));
         model.addAttribute("meals", super.getBetween(startDate, startTime, endDate, endTime));
-        return "meals";
+        return "meals2";
     }
 
     private int getId(HttpServletRequest request) {
