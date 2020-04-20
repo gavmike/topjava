@@ -42,11 +42,7 @@ public class AdminUIController extends AbstractUserController {
     }
 
     @PostMapping
-    public /*ResponseEntity<String>*/ void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
-     /*   if (result.hasErrors()) {
-            // TODO change to exception handler
-            return ValidationUtil.getErrorResponse(result);
-        }*/
+    public void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
         try {
             if (userTo.isNew()) {
                 super.create(userTo);
@@ -54,10 +50,8 @@ public class AdminUIController extends AbstractUserController {
                 super.update(userTo, userTo.id());
             }
         } catch (DataIntegrityViolationException e) {
-            // result.rejectValue("email","exeption.duplicate_email");
-            throw new IllegalRequestDataException(messageSource.getMessage("exeption.duplicate_email",new Object[10], LocaleContextHolder.getLocale()));
+            throw new IllegalRequestDataException(messageSource.getMessage("exeption.duplicate_email", new Object[10], LocaleContextHolder.getLocale()));
         }
-        //  return ResponseEntity.ok().build();
     }
 
     @Override
