@@ -1,11 +1,16 @@
 package ru.javawebinar.topjava.web.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.UserTo;
+import ru.javawebinar.topjava.util.exception.IllegalRequestDataException;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -13,6 +18,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/ajax/admin/users")
 public class AdminUIController extends AbstractUserController {
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Override
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -39,12 +47,17 @@ public class AdminUIController extends AbstractUserController {
             // TODO change to exception handler
             return ValidationUtil.getErrorResponse(result);
         }*/
-        if (userTo.isNew()) {
-            super.create(userTo);
-        } else {
-            super.update(userTo, userTo.id());
+        try {
+            if (userTo.isNew()) {
+                super.create(userTo);
+            } else {
+                super.update(userTo, userTo.id());
+            }
+        } catch (DataIntegrityViolationException e) {
+            // result.rejectValue("email","exeption.duplicate_email");
+            throw new IllegalRequestDataException(messageSource.getMessage("exeption.duplicate_email",new Object[10], LocaleContextHolder.getLocale()));
         }
-      //  return ResponseEntity.ok().build();
+        //  return ResponseEntity.ok().build();
     }
 
     @Override
