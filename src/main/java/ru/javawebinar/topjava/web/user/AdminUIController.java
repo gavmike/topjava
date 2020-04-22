@@ -6,7 +6,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.to.UserTo;
@@ -42,7 +41,7 @@ public class AdminUIController extends AbstractUserController {
     }
 
     @PostMapping
-    public void createOrUpdate(@Valid UserTo userTo, BindingResult result) {
+    public void createOrUpdate(@Valid UserTo userTo) {
         try {
             if (userTo.isNew()) {
                 super.create(userTo);
@@ -50,7 +49,7 @@ public class AdminUIController extends AbstractUserController {
                 super.update(userTo, userTo.id());
             }
         } catch (DataIntegrityViolationException e) {
-            throw new IllegalRequestDataException(messageSource.getMessage("exeption.duplicate_email", new Object[10], LocaleContextHolder.getLocale()));
+            throw new IllegalRequestDataException(messageSource.getMessage("exeption.duplicate_email", null, LocaleContextHolder.getLocale()));
         }
     }
 

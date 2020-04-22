@@ -66,7 +66,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void registerNotFound() throws Exception {
+    void registerBad() throws Exception {
         perform(MockMvcRequestBuilders.post(REST_URL + "/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(new UserTo())))
@@ -75,7 +75,7 @@ class ProfileRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void updateNotFound() throws Exception {
+    void updateBad() throws Exception {
         perform(MockMvcRequestBuilders.put(REST_URL).contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(USER))
                 .content(JsonUtil.writeValue(new UserTo())))

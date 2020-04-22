@@ -34,7 +34,6 @@ public class ProfileUIController extends AbstractUserController {
         }
         catch (DataIntegrityViolationException e) {
             result.rejectValue("email","exeption.duplicate_email");
-
             return "profile";
         }
     }

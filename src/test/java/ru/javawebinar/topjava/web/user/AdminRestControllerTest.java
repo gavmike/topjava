@@ -100,7 +100,7 @@ class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void updateNotFound() throws Exception{
+    void updateBad() throws Exception{
         perform(MockMvcRequestBuilders.put(REST_URL + USER_ID)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
@@ -109,16 +109,13 @@ class AdminRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void createNotFound() throws Exception{
+    void createBad() throws Exception{
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(ADMIN))
                 .content(jsonWithPassword(new User(), "Pass")))
                 .andExpect(status().isUnprocessableEntity());
     }
-
-
-
 
 
     @Test
