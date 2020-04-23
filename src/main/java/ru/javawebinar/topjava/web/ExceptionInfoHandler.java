@@ -51,12 +51,15 @@ public class ExceptionInfoHandler {
     @ExceptionHandler({IllegalRequestDataException.class, ValidationException.class, MethodArgumentNotValidException.class,
             MethodArgumentTypeMismatchException.class, HttpMessageNotReadableException.class, BindException.class})
     public ErrorInfo illegalRequestDataError(HttpServletRequest req, Exception e) {
+        Throwable rootCause = ValidationUtil.getRootCause(e);
         if (e instanceof BindException) {
-            String message = ((BindException) e).getFieldError().getField();
+            String message = ((BindException) e).getFieldError().getDefaultMessage();
+            log.error(VALIDATION_ERROR + " at request " + req.getRequestURL(), rootCause);
             return new ErrorInfo(VALIDATION_ERROR, message);
         }
         if (e instanceof MethodArgumentNotValidException) {
-            String message = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getField();
+            String message = ((MethodArgumentNotValidException) e).getBindingResult().getFieldError().getDefaultMessage();
+            log.error(VALIDATION_ERROR + " at request " + req.getRequestURL(), rootCause);
             return new ErrorInfo(VALIDATION_ERROR, message);
         }
 
@@ -67,7 +70,6 @@ public class ExceptionInfoHandler {
     @ExceptionHandler(Exception.class)
     public ErrorInfo handleError(HttpServletRequest req, Exception e) {
         Throwable throwable = ValidationUtil.getRootCause(e);
-        String message = e.getLocalizedMessage().toUpperCase();
         return new ErrorInfo(APP_ERROR, throwable.getMessage());
     }
 
